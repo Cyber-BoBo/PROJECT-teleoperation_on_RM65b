@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta property="og:title" content="VSG-HOI: Enhancing Understanding of Human-Object Interaction in Videos with Visual, Structural and Global Information"/>
+  <meta property="og:url" content="https://cyber-bobo.github.io/teleoperation_on_RM65b/"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+
+
+  <title>项目|基于Realsense和VisionPro的视觉遥操作抓取</title>
+  
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+  rel="stylesheet">
+  <link rel="icon" href="static/figures/icon2.png">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+  <script src="static/js/audioPlayer.js" defer></script>
+</head>
+
+<body>
+
+  
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+<!--       <a class="navbar-item" href="https://cyber-bobo.github.io">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a> -->
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Project
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://evm7.github.io/Self-AWare/">
+            智慧病房遥操作
+          </a>
+          <a class="navbar-item" href="https://evm7.github.io/I-CTRL/">
+            灵巧手抓取
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+<section class="publication-header">
+  <div class="hero-body">
+    <div class="container is-max-widescreen">
+      <!-- <div class="columns is-centered"> -->
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">基于Realsense和VisionPro的视觉遥操作抓取</h1>
+          <div class="is-size-3 publication-authors">
+            视觉遥操作, 灵巧手抓取
+          </div>
+        </div>
+    </div>
+  </div>
+
+</section>
+
+<section class="publication-author-block">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Sun Yat-Sen University (Shenzhen)</span> 
+          </div>
+          
+          <div class="column has-text-centered">
+            <div class="publication-links">
+		          <!-- Colab Link.  -->
+              <span class="link-block">
+                <a href="https://github.com/Cyber-BoBo/VSG-HOI" target="_blank"
+                class="external-link button is-normal is-rounded">
+                  <span class="icon">
+                    <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code(*Partially available)</span>
+                </a>
+              </span>
+
+              <!-- </span> -->
+              <!-- Colab Link. -->
+		    <!-- Play/Pause button and audio -->
+<!-- 		    <span class="link-block">
+		      <span class="audio-player" style="display: inline-block; vertical-align: middle;">
+			<button id="audio-control-button" onclick="toggleAudio()" class="button is-normal is-rounded">
+			  <span class="icon">
+			    <i id="play-icon" class="fas fa-play"></i>
+			  </span>
+			  <span id="play-text">Podcast</span>
+			</button>
+			<audio id="audio-file" src="static/audio/PodCastAudio.wav" type="audio/wav" style="display: none;"></audio>
+		  </span>
+	    </span> -->
+	  </div>
+
+		 <!-- Hidden Playback Controls + Disclaimer -->
+	  <div id="audio-controls" style="display: none; margin-top: 15px;">
+	    <div>
+	      <input id="seek-bar" type="range" min="0" value="0" step="1" style="width: 100%;">
+	      <span id="time-remaining">0:00</span> / <span id="duration">0:00</span>
+	    </div>
+	  </div>
+
+	  <!-- Toggle Visibility Icon -->
+	  <div id="toggle-visibility-icon" style="display: none; text-align: right; margin-top: 5px;">
+	    <i id="visibility-icon" class="fas fa-eye" style="cursor: pointer;" onclick="toggleControls()"></i>
+	  </div>
+	</div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <div class="container">
+        <div class="item">
+          <p style="margin-bottom: 30px">
+ 
+        <video poster="" id="tree" autoplay controls muted loop height="100%">
+          <source src="static/figures/videos/overview.mp4"
+          type="video/mp4">
+        </video>
+        </p>
+        </div>
+    </div>
+  </div>
+  </div>
+  </div>
+</section> -->
+    
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+
+        <h2 class="title is-3">项目内容概述</h2>
+        <div class="content has-text-justified">
+          <p>
+		通过融合目标检测、人体姿态估计与机械臂控制等核心算法，构建高效协同的抓取系统，实现对多样物品的精准识别与灵活抓取。
+    项目可以划分为三个方案。
+    第一个方案是基于Realsense的视觉遥操作，通过一个固定的摄像头来拍摄人体的RGB图像，并通过空间映射解析出手腕的6D姿态和手部的3D姿态，利用逆运动学解算得到机械臂各关节角度，并利用重定向算法得到灵巧手各关节角度，最后通过数据透传将控制信号传到机械臂和灵巧手。
+    第二个方案是基于VR设备的沉浸式遥操作，借助apple vision pro 设备强大的硬件和姿态估计算法，可以得到十分精确的手部和腕部姿态，此时利用得到的人体姿态信息去控制机械臂和灵巧手。
+    第三个方案是基于目标检测的半自动化抓取。首先用机械臂腕部摄像头扫描周围环境，检测周围有可抓取的物体。接着更具检测信息估计固体在空间中的位置，然后进行路径规划移动到需要抓取物体的上方，接着用视觉遥操作区精细控制机械臂和灵巧手实现抓取。最后，一旦抓取成功，机械臂便自动将抓取的物体运送到指定位置。
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+  </div>
+</section>
+
+<!-- <section class="hero is-small">
+  <div class="hero-body">
+    <div class="container">
+
+      <div class="column is-centered has-text-centered">
+        <img src="static/figures/overview.jpg" alt="Motivation of our model"/>
+      </div>    
+  </div>
+</div>
+</div>
+</section> -->
+
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">基于Mediapipe和Dex-retargeting的灵巧手遥操作</h2> 
+          <div class="content has-text-justified">
+            <p>
+            使用Mediappipe获取手部姿态(2.5D坐标)，并通过Dex-retargeting将人手姿态映射到灵巧手上，以下是在Allegro Hand上的效果演示
+            </p>
+          <div class="columns is-centered has-text-centered">
+            <div class="item">
+              <p style="margin-bottom: 30px">
+
+                <video poster="" id="tree" autoplay controls muted loop height="100%">
+                  <source src="static/audio/teleoperation-01.mp4" type="video/mp4">
+                </video>
+                <br><br>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+  </div>
+</section>
+
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">基于VisionPro和角度映射的灵巧手遥操作</h2> 
+          <div class="content has-text-justified">
+            <p>
+            直接获取VisionPro的手部姿态(3D坐标)，并通过设计的角度映射方法将人手姿态映射到灵巧手上，以下是在Allegro Hand上的效果演示
+            </p>
+          <div class="columns is-centered has-text-centered">
+            <div class="item">
+              <p style="margin-bottom: 30px">
+
+                <video poster="" id="tree" autoplay controls muted loop height="100%">
+                  <source src="static/audio/teleoperation-02.mp4" type="video/mp4">
+                </video>
+                <br><br>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+  </div>
+</section>
+
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">基于Mediapipe的机械手臂视觉遥操作</h2> 
+          <div class="content has-text-justified">
+            <p>
+            通过多个子进程，利用Mediapipe捕获的手部姿态(2.5D)，同时控制机械臂和灵巧手进行多种物体抓取，以下是在Realman RM65b机械臂和Inspire Hand上的效果演示
+            </p>
+          <div class="columns is-centered has-text-centered">
+            <div class="item">
+              <p style="margin-bottom: 30px">
+
+                <video poster="" id="tree" autoplay controls muted loop height="100%">
+                  <source src="static/audio/teleoperation-03.mp4" type="video/mp4">
+                </video>
+                <br><br>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+  </div>
+</section>
+
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">基于VisionPro的机械手臂视觉遥操作</h2> 
+          <div class="content has-text-justified">
+            <p>
+            通过多个子进程，利用VisionPro捕获的手部姿态(3D坐标)，同时控制机械臂和灵巧手，以下是在Realman RM65b机械臂和Allegro Hand上的效果演示
+            </p>
+          <div class="columns is-centered has-text-centered">
+            <div class="item">
+              <p style="margin-bottom: 30px">
+
+                <video poster="" id="tree" autoplay controls muted loop height="100%">
+                  <source src="static/audio/teleoperation-04.mp4" type="video/mp4">
+                </video>
+                <br><br>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+  </div>
+</section>
+    
+    
+<!--     
+<section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>
+@INPROCEEDINGS{10375150,
+  author={Yan, Yashuai and Mascaro, Esteve Valls and Lee, Dongheui},
+  booktitle={2023 IEEE-RAS 22nd International Conference on Humanoid Robots (Humanoids)}, 
+  title={ImitationNet: Unsupervised Human-to-Robot Motion Retargeting via Shared Latent Space}, 
+  year={2023},
+  volume={},
+  number={},
+  pages={1-8},
+  keywords={Robot motion;Measurement;Interpolation;Three-dimensional displays;Humanoid robots;Aerospace electronics;Skeleton},
+  doi={10.1109/Humanoids57100.2023.10375150}}
+</code></pre>
+    </div>
+</section> -->
+
+
+
+
+<footer class="footer">
+  <div class="columns is-centered">
+    <div class="column is-8">
+      <div class="content">
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </body>
+  </html>
